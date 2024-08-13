@@ -44,9 +44,9 @@ moneyManager.addMoneyCallback = function(data) {
 	ApiConnector.addMoney(data, (response) => {
 		if (response.success) {
 			ProfileWidget.showProfile(response.data);
-			moneyManager.setMessage(response, "Баланс успешно пополнен");
+			moneyManager.setMessage(response.success, "Баланс успешно пополнен");
 		} else {
-			moneyManager.setMessage(!response, "Ошибка пополнения баланса");
+			moneyManager.setMessage(response.success, response.error);
 		}
 	});
 };
@@ -57,12 +57,9 @@ moneyManager.conversionMoneyCallback = function(data) {
 	ApiConnector.convertMoney(data, (response) => {
 		if (response.success) {
 			ProfileWidget.showProfile(response.data);
-			moneyManager.setMessage(
-				response,
-				"Конвертирование валюты успешно выполнено",
-			);
+			moneyManager.setMessage(response.success, "Конвертирование валюты успешно выполнено");
 		} else {
-			moneyManager.setMessage(!response, "Ошибка конвертирования валюты");
+			moneyManager.setMessage(response.success, response.error);
 		}
 	});
 };
@@ -73,9 +70,9 @@ moneyManager.sendMoneyCallback = function(data) {
 	ApiConnector.transferMoney(data, (response) => {
 		if (response.success) {
 			ProfileWidget.showProfile(response.data);
-			moneyManager.setMessage(response, "Перевод валюты успешно выполнен");
+			moneyManager.setMessage(response.success, "Перевод валюты успешно выполнен");
 		} else {
-			moneyManager.setMessage(!response, "Ошибка перевода валюты");
+			moneyManager.setMessage(response.success, response.error);
 		}
 	});
 };
@@ -102,15 +99,9 @@ favoritesWidget.addUserCallback = function(data) {
 			favoritesWidget.clearTable(response.data);
 			favoritesWidget.fillTable(response.data);
 			moneyManager.updateUsersList(response.data);
-			favoritesWidget.setMessage(
-				response,
-				"Пользователь успешно добавлен в список избранных",
-			);
+			favoritesWidget.setMessage(response.success, "Пользователь успешно добавлен в список избранных");
 		} else {
-			favoritesWidget.setMessage(
-				!response,
-				"Пользователь не может быть добавлен в список избранных",
-			);
+			favoritesWidget.setMessage(response.success, response.error);
 		}
 	});
 };
@@ -123,15 +114,9 @@ favoritesWidget.removeUserCallback = function(data) {
 			favoritesWidget.clearTable(response.data);
 			favoritesWidget.fillTable(response.data);
 			moneyManager.updateUsersList(response.data);
-			favoritesWidget.setMessage(
-				response,
-				"Пользователь успешно удален из списка избранных",
-			);
+			favoritesWidget.setMessage(response.success, "Пользователь успешно удален из списка избранных");
 		} else {
-			favoritesWidget.setMessage(
-				!response,
-				"Пользователь не может быть удален из списка избранных",
-			);
+			favoritesWidget.setMessage(response.success, response.error);
 		}
 	});
 };
